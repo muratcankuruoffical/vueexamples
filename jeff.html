@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+</head>
+<body>
+<div id="app" class="container mt-3">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <img src="https://prabook.com/web/show-photo-icon.jpg?id=1918927&width=220&cache=false" alt="" class="rounded-circle"><br>
+            <span class="text-muted"> Spend Jeff' Money</span>
+        </div>
+        <div class="col-md-12 text-center mt-3 p-3" style="background-color: #ff9900">
+            <span class="text-light font-weight-bold">{{ moneyFormat(balance) }} $</span>
+        </div>
+    </div>
+    <div class="row mt-3 mb-3">
+        <div class="col-md-4" v-for="product in products">
+            <div class="card text-center">
+                <div class="card-body">
+                    <img :src="product.img" alt="" class="card-img w-50 h-auto"><br>
+                    <span class="text-dark font-weight-bold">{{ product.name }}</span><br>
+                    <span class="font-weight-bold" style="color: #ff9900"> {{ moneyFormat(product.price) }} $</span>
+                </div>
+                <div class="card-footer">
+                    <input type="number" v-model:value="quantity"><br>
+                    <button class="btn btn-dark mt-3" @click="sell(product.price)">Sell</button>
+                    <button class="btn btn-primary mt-3" @click="buy(product.price)">Buy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script src="js/bootstrap.js"></script>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            balance : 160000000000,
+            quantity : 0,
+            products : [
+                {"img" : "https://i.sozcu.com.tr/wp-content/uploads/2019/03/iecrop/bugatti_16_9_1551853670-880x495.jpg","name" : "Bugatti La Voiture Noire", "price" : 1900000},
+                {"img" : "https://www.webtekno.com/images/editor/default/0002/75/6b4681f9e463dd7135db60c6853891f9ba9cc45b.jpeg","name" : "MSI GT76 Titan DT", "price" : 10000},
+                {"img" : "https://static.shiftdelete.net/wp-content/uploads/2019/08/D%C3%BCnyan%C4%B1n-en-pahal%C4%B1-telefonlar%C4%B1-Elmastan-yakuta-ShiftDelete.Net-1-768x432.jpg","name" : "Black Diamond VIPN Smartphone", "price" : 300000},
+                {"img" : "https://icdn.ensonhaber.com/resimler/galeri/5_7190.jpg","name" : "Bahama's Home", "price" : 22000000}
+
+            ]
+        },
+        methods : {
+            moneyFormat : function (number) {
+                return new Intl.NumberFormat('en-US', {currency: 'USD',minimumFractionDigits: 2}).format(number);
+            },
+            buy : function (price) {
+                this.balance -= price*this.quantity;
+            },
+            sell : function (price) {
+                this.balance += price*this.quantity;
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
